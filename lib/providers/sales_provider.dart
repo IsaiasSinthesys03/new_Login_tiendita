@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../data/repositories/product_repository.dart';
 import '../data/repositories/sales_repository.dart';
-import '../models/product.dart';
+import '../core/models/product.dart'; 
 
 class SalesProvider with ChangeNotifier {
   final _productsRepo = ProductRepository();
@@ -51,7 +51,7 @@ class SalesProvider with ChangeNotifier {
             'quantity': e.value.$2,
             'unitPrice': e.value.$1.unitPrice,
           }).toList();
-      await _salesRepo.createSale(when: DateTime.now(), items: items);
+      await _salesRepo.createSale(when: DateTime.now(), items: items); // CORRECCIÓN: Uso de 'when' e 'items'
       _current.clear();
       notifyListeners();
       return null;

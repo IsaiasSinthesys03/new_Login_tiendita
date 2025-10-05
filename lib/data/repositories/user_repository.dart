@@ -1,5 +1,5 @@
 import 'package:sqflite/sqflite.dart';
-import '../../models/user.dart';
+import '../../core/models/user.dart'; // RUTA CORREGIDA
 import '../local/db_helper.dart';
 
 class UserRepository {

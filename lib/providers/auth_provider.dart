@@ -3,7 +3,7 @@ import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../data/repositories/user_repository.dart';
-import '../models/user.dart';
+import '../core/models/user.dart'; // RUTA CORREGIDA
 
 class AuthProvider with ChangeNotifier {
   final _repo = UserRepository();

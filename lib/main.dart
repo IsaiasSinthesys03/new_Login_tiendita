@@ -21,7 +21,9 @@ class TienditaApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => AuthProvider()..loadSessionIfAny()),
+        // CORRECCIÓN: Ya no se llama a .loadSessionIfAny().
+        // Esto obliga al usuario a iniciar sesión cada vez que la app inicia.
+        ChangeNotifierProvider(create: (_) => AuthProvider()),
         ChangeNotifierProvider(create: (_) => ProductsProvider()),
         ChangeNotifierProvider(create: (_) => SalesProvider()),
       ],

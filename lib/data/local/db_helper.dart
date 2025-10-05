@@ -40,6 +40,7 @@ class DBHelper {
           )
         ''');
 
+        // TABLA SALE_ITEMS ACTUALIZADA
         await db.execute('''
           CREATE TABLE sale_items(
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -47,6 +48,9 @@ class DBHelper {
             product_id INTEGER NOT NULL,
             quantity INTEGER NOT NULL,
             unit_price REAL NOT NULL,
+            is_returned INTEGER NOT NULL DEFAULT 0,
+            return_reason TEXT,
+            returned_quantity INTEGER NOT NULL DEFAULT 0, -- NUEVA COLUMNA para devolución parcial
             FOREIGN KEY(sale_id) REFERENCES sales(id) ON DELETE CASCADE,
             FOREIGN KEY(product_id) REFERENCES products(id)
           )

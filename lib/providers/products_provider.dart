@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../data/repositories/product_repository.dart';
-import '../models/product.dart';
+import '../core/models/product.dart';
 
 class ProductsProvider with ChangeNotifier {
   final _repo = ProductRepository();
@@ -8,9 +8,11 @@ class ProductsProvider with ChangeNotifier {
 
   List<Product> get items => _items;
 
-  Future<void> refresh() async {
+  // CORRECCIÓN: El método refresh ahora devuelve Future<List<Product>> y actualiza _items.
+  Future<List<Product>> refresh() async {
     _items = await _repo.getAll();
     notifyListeners();
+    return _items;
   }
 
   Future<String?> addSmart(String name, double price, int qty) async {

@@ -23,9 +23,10 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final user = context.watch<AuthProvider>().current;
+    // CAMBIO: Mostrar el 'fullName' (Nombre de la Tienda) en la AppBar.
     return Scaffold(
       appBar: AppBar(
-        title: Text('TienditaMejorada - ${user?.username ?? ''}'),
+        title: Text('${user?.fullName ?? 'TienditaMejorada'}'),
         actions: [
           IconButton(
               onPressed: () async {

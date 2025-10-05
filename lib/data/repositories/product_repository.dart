@@ -1,5 +1,5 @@
 import 'package:sqflite/sqflite.dart';
-import '../../models/product.dart';
+import '../../core/models/product.dart'; 
 import '../local/db_helper.dart';
 
 class ProductRepository {

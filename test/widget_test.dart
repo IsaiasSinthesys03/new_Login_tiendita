@@ -8,23 +8,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:tiendita1/main.dart';
+import 'package:TiendaApp/main.dart'; // RUTA CORREGIDA: Usa el nombre del proyecto de pubspec.yaml
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  testWidgets('Test inicial - Verifica que la app inicia correctamente', (WidgetTester tester) async {
+    // Construye nuestra aplicación y dispara un frame.
+    await tester.pumpWidget(const TienditaApp()); 
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
-
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
-
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    // Dado que la app inicia en LoginScreen si no hay sesión, 
+    // verificamos que encuentra el texto de la pantalla de inicio de sesión.
+    expect(find.text('Iniciar Sesión'), findsOneWidget);
+    expect(find.text('Sistema de Inventario y Ventas'), findsOneWidget);
   });
 }

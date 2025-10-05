@@ -37,7 +37,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       textAlign: TextAlign.center,
                       style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                   gap(16),
-                  TextField(decoration: appInput('Nombre Completo', Icons.badge), controller: _name),
+                  // CAMBIO: 'Nombre Completo' a 'Nombre de la Tienda'
+                  TextField(decoration: appInput('Nombre de la Tienda', Icons.storefront), controller: _name),
                   gap(12),
                   TextField(decoration: appInput('Usuario', Icons.person), controller: _user),
                   gap(12),
@@ -49,7 +50,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     onPressed: _busy ? null : () async {
                       setState(() => _busy = true);
                       final err = await context.read<AuthProvider>().register(
-                        fullName: _name.text.trim(),
+                        // NOTA: El campo 'fullName' en el modelo AppUser ahora almacena el nombre de la tienda.
+                        fullName: _name.text.trim(), 
                         username: _user.text.trim(),
                         email: _email.text.trim(),
                         password: _pass.text,
