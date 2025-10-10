@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:lottie/lottie.dart';
 import '../../data/repositories/sales_repository.dart';
 import '../../providers/sales_provider.dart';
 import '../../providers/products_provider.dart'; 
@@ -199,10 +200,9 @@ class _ReportsScreenState extends State<ReportsScreen> {
                               Text(
                                 (DateTime.parse(r['created_at'] as String)).toLocal().toString().substring(11, 16),
                               ),
-                              IconButton(
-                                icon: const Icon(Icons.delete_outline, color: Colors.grey),
-                                // Pasa la cantidad neta (vendida - devuelta) como el máximo a devolver
-                                onPressed: () => _showReturnDialog(saleItemId, productName, price, qtyNet),
+                              GestureDetector(
+                                onTap: () => _showReturnDialog(saleItemId, productName, price, qtyNet),
+                                child: Lottie.asset('assets/Trash can.json', width: 30, height: 30),
                               ),
                             ],
                           ),

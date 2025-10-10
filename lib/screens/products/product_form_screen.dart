@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:lottie/lottie.dart';
 import '../../core/models/product.dart';
 import '../../providers/products_provider.dart';
 import '../../widgets/ui.dart';
@@ -50,9 +51,8 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
           Row(
             children: [
               if (isEdit)
-                IconButton(
-                  icon: const Icon(Icons.delete, color: Colors.red),
-                  onPressed: () async {
+                GestureDetector(
+                  onTap: () async {
                     final confirm = await showDialog(
                       context: context,
                       builder: (context) => AlertDialog(
@@ -75,6 +75,7 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
                       }
                     }
                   },
+                  child: Lottie.asset('assets/Trash can.json', width: 40, height: 40),
                 ),
               const Spacer(),
               FilledButton.icon(
