@@ -26,7 +26,8 @@ class _SalesScreenState extends State<SalesScreen> {
 
   // Carga los productos y actualiza el estado local
   Future<List<Product>> _loadProducts() async {
-    _allProducts = await context.read<ProductsProvider>().refresh();
+    await context.read<ProductsProvider>().refresh();
+    _allProducts = context.read<ProductsProvider>().items;
     
     final availableProducts = _allProducts.where((p) => !_selectedProductIds().contains(p.id) && p.stock > 0).toList();
     

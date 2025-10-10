@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../core/models/product.dart';
 import '../../providers/products_provider.dart';
 import 'product_form_screen.dart';
 
@@ -34,6 +35,17 @@ class _ProductsScreenState extends State<ProductsScreen> {
                     leading: const Icon(Icons.inventory_2),
                     title: Text(p.name),
                     subtitle: Text('Stock: ${p.stock} • \$${p.unitPrice.toStringAsFixed(2)}'),
+                    trailing: IconButton(
+                      icon: const Icon(Icons.edit),
+                      onPressed: () async {
+                        await showModalBottomSheet(
+                          context: context,
+                          isScrollControlled: true,
+                          useSafeArea: true,
+                          builder: (_) => ProductFormScreen(product: p),
+                        );
+                      },
+                    ),
                   ),
                 );
               },

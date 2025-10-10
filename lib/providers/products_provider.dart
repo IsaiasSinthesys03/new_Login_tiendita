@@ -8,16 +8,34 @@ class ProductsProvider with ChangeNotifier {
 
   List<Product> get items => _items;
 
-  // CORRECCIÓN: El método refresh ahora devuelve Future<List<Product>> y actualiza _items.
-  Future<List<Product>> refresh() async {
+  Future<void> refresh() async {
     _items = await _repo.getAll();
     notifyListeners();
-    return _items;
   }
 
   Future<String?> addSmart(String name, double price, int qty) async {
     try {
       await _repo.upsertSmart(name: name, unitPrice: price, quantity: qty);
+      await refresh();
+      return null;
+    } catch (e) {
+      return e.toString();
+    }
+  }
+
+  Future<String?> update(Product product) async {
+    try {
+      await _repo.update(product);
+      await refresh();
+      return null;
+    } catch (e) {
+      return e.toString();
+    }
+  }
+
+  Future<String?> delete(int id) async {
+    try {
+      await _repo.delete(id);
       await refresh();
       return null;
     } catch (e) {

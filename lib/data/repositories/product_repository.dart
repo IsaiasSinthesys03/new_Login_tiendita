@@ -9,8 +9,6 @@ class ProductRepository {
     return res.map((e) => Product.fromMap(e)).toList();
   }
 
-  /// Regla de stock inteligente:
-  /// Si (name, unit_price) coincide, suma stock; si cambia alguno, crea producto nuevo.
   Future<void> upsertSmart({required String name, required double unitPrice, required int quantity}) async {
     final db = await DBHelper.instance.database;
     final existing = await db.query('products',
@@ -33,5 +31,15 @@ class ProductRepository {
     if (p.stock < quantity) throw Exception('Stock insuficiente');
     await db.update('products', p.copyWith(stock: p.stock - quantity).toMap(),
         where: 'id = ?', whereArgs: [productId]);
+  }
+
+  Future<void> update(Product product) async {
+    final db = await DBHelper.instance.database;
+    await db.update('products', product.toMap(), where: 'id = ?', whereArgs: [product.id]);
+  }
+
+  Future<void> delete(int id) async {
+    final db = await DBHelper.instance.database;
+    await db.delete('products', where: 'id = ?', whereArgs: [id]);
   }
 }

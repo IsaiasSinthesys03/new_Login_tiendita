@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../../core/app_routes.dart';
 import '../../providers/auth_provider.dart';
 import '../../widgets/ui.dart';
+import 'package:lottie/lottie.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -28,7 +29,7 @@ class _LoginScreenState extends State<LoginScreen> {
               child: ListView(
                 shrinkWrap: true,
                 children: [
-                  const Icon(Icons.storefront, size: 60, color: Colors.blue),
+                  Lottie.asset('assets/login_animation.json'),
                   gap(8),
                   const Text('TienditaMejorada',
                       textAlign: TextAlign.center,
