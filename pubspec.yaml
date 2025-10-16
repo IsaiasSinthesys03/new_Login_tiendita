@@ -4,22 +4,23 @@ publish_to: "none"
 version: 1.0.0+1
 
 environment:
-  sdk: ">=3.0.0 <4.0.0"   # Versión ajustada para compatibilidad
-  
+  sdk: ">=3.0.0 <4.0.0" # Versión ajustada para compatibilidad
+
 dependencies:
+  crypto: ^3.0.3
   flutter:
     sdk: flutter
-  provider: ^6.0.5
-  sqflite: ^2.3.0
-  path: ^1.8.3
-  shared_preferences: ^2.2.2
-  crypto: ^3.0.3
   lottie: ^3.3.2
+  path: ^1.8.3
+  provider: ^6.0.5
+  shared_preferences: ^2.2.2
+  sqflite: ^2.3.0
 
 dev_dependencies:
+  flutter_launcher_icons: ^0.14.4
+  flutter_lints: ^4.0.0
   flutter_test:
     sdk: flutter
-  flutter_lints: ^4.0.0
 
 flutter:
   uses-material-design: true

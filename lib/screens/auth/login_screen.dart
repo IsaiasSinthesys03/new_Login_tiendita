@@ -61,6 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           .login(_userCtrl.text.trim(), _passCtrl.text);
                       setState(() => _busy = false);
                       if (err != null) {
+                        if (!context.mounted) return;
                         ScaffoldMessenger.of(context)
                             .showSnackBar(SnackBar(content: Text(err)));
                       } else {

@@ -26,7 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
     // CAMBIO: Mostrar el 'fullName' (Nombre de la Tienda) en la AppBar.
     return Scaffold(
       appBar: AppBar(
-        title: Text('${user?.fullName ?? 'TienditaMejorada'}'),
+        title: Text(user?.fullName ?? 'TienditaMejorada'),
         actions: [
           IconButton(
               onPressed: () async {

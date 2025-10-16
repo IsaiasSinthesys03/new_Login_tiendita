@@ -66,12 +66,11 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
                     );
                     if (confirm == true) {
                       final err = await context.read<ProductsProvider>().delete(widget.product!.id!);
+                      if (!context.mounted) return;
                       if (err != null) {
-                        if (context.mounted) {
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(err)));
-                        }
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(err)));
                       } else {
-                        if (context.mounted) Navigator.pop(context);
+                        Navigator.pop(context);
                       }
                     }
                   },

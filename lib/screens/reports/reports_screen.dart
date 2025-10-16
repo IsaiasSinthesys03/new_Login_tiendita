@@ -167,7 +167,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
               ...rows.map((r) {
                 final saleItemId = r['id'] as int;
                 final qtySold = r['quantity'] as int;
-                final qtyReturned = (r['returned_quantity'] as int) ?? 0;
+                final qtyReturned = (r['returned_quantity'] as int);
                 final qtyNet = qtySold - qtyReturned;
                 final isFullyReturned = qtyNet <= 0;
                 final returnReason = r['return_reason'] as String?;
@@ -208,7 +208,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
                           ),
                   ),
                 );
-              }).toList(),
+              }),
               const Divider(),
               Align(
                 alignment: Alignment.centerRight,

@@ -1,9 +1,7 @@
-import 'package:sqflite/sqflite.dart';
-import '../../core/models/product.dart'; 
+import '../../core/models/product.dart';
 import '../local/db_helper.dart';
 
-class ProductRepository {
-  Future<List<Product>> getAll() async {
+class ProductRepository {  Future<List<Product>> getAll() async {
     final db = await DBHelper.instance.database;
     final res = await db.query('products', orderBy: 'name ASC');
     return res.map((e) => Product.fromMap(e)).toList();

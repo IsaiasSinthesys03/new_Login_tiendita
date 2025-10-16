@@ -1,4 +1,3 @@
-import 'package:sqflite/sqflite.dart';
 import '../../core/models/sale.dart';
 import '../local/db_helper.dart';
 
@@ -95,7 +94,7 @@ class SalesRepository {
     double total = 0;
     for (final r in rows) {
       final qtySold = (r['quantity'] as int);
-      final qtyReturned = (r['returned_quantity'] as int) ?? 0;
+      final qtyReturned = (r['returned_quantity'] as int);
       final price = (r['unit_price'] as num).toDouble();
       
       total += (qtySold - qtyReturned) * price;

@@ -99,6 +99,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 );
                                 setState(() => _busy = false);
                                 if (err != null) {
+                                  if (!context.mounted) return;
                                   ScaffoldMessenger.of(context)
                                       .showSnackBar(SnackBar(content: Text(err)));
                                 } else {
