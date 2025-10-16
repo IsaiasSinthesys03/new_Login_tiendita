@@ -5,17 +5,23 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../data/repositories/user_repository.dart';
 import '../core/models/user.dart'; // RUTA CORREGIDA
 
+enum LoginStatus { init, loading, success, failure }
+
 class AuthProvider with ChangeNotifier {
   final _repo = UserRepository();
   AppUser? _current;
+  LoginStatus _loginStatus = LoginStatus.init;
+  String? _errorMessage;
 
   AppUser? get current => _current;
+  LoginStatus get loginStatus => _loginStatus;
+  String? get errorMessage => _errorMessage;
 
   Future<void> loadSessionIfAny() async {
     final prefs = await SharedPreferences.getInstance();
-    final username = prefs.getString('logged_username');
-    if (username != null) {
-      _current = await _repo.getByUsername(username);
+    final email = prefs.getString('logged_email');
+    if (email != null) {
+      _current = await _repo.getByEmail(email);
       notifyListeners();
     }
   }
@@ -29,8 +35,8 @@ class AuthProvider with ChangeNotifier {
     required String password,
   }) async {
     try {
-      final exists = await _repo.getByUsername(username);
-      if (exists != null) return 'El usuario ya existe';
+      final exists = await _repo.getByEmail(email);
+      if (exists != null) return 'El correo electrónico ya está registrado';
       final user = AppUser(
         fullName: fullName,
         username: username,
@@ -44,21 +50,51 @@ class AuthProvider with ChangeNotifier {
     }
   }
 
-  Future<String?> login(String username, String password) async {
-    final user = await _repo.getByUsername(username);
-    if (user == null) return 'Usuario o contraseña inválidos';
-    if (user.passwordHash != _hash(password)) return 'Usuario o contraseña inválidos';
-    _current = user;
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('logged_username', user.username);
+  Future<void> login(String email, String password) async {
+    _loginStatus = LoginStatus.loading;
+    _errorMessage = null;
     notifyListeners();
-    return null;
+    
+    try {
+      final user = await _repo.getByEmail(email);
+      if (user == null) {
+        _loginStatus = LoginStatus.failure;
+        _errorMessage = 'Credenciales incorrectas. Verifica tu correo y contraseña.';
+        notifyListeners();
+        return;
+      }
+      
+      if (user.passwordHash != _hash(password)) {
+        _loginStatus = LoginStatus.failure;
+        _errorMessage = 'Credenciales incorrectas. Verifica tu correo y contraseña.';
+        notifyListeners();
+        return;
+      }
+      
+      _current = user;
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('logged_email', user.email);
+      _loginStatus = LoginStatus.success;
+      notifyListeners();
+    } catch (e) {
+      _loginStatus = LoginStatus.failure;
+      _errorMessage = 'Error interno del sistema. No se pudo verificar la base de datos.';
+      notifyListeners();
+    }
+  }
+
+  void clearError() {
+    _loginStatus = LoginStatus.init;
+    _errorMessage = null;
+    notifyListeners();
   }
 
   Future<void> logout() async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.remove('logged_username');
+    await prefs.remove('logged_email');
     _current = null;
+    _loginStatus = LoginStatus.init;
+    _errorMessage = null;
     notifyListeners();
   }
 }
